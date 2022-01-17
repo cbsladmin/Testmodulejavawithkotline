@@ -1,0 +1,92 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.2"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
+
+    }
+}
+
+subprojects {
+    if (name == "app") {
+        apply plugin: "com.android.application"
+    } else {
+        apply plugin: "com.android.library"
+    }
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-kapt'
+
+    android {
+        compileSdkVersion(31)
+        defaultConfig {
+            minSdkVersion(21)
+            targetSdkVersion(31)
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        dexOptions {
+            preDexLibraries = true
+            javaMaxHeapSize = "4g"
+        }
+
+        compileOptions {
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        buildFeatures {
+            dataBinding true
+        }
+    }
+
+    kapt {
+        useBuildCache = true
+        correctErrorTypes = true
+    }
+
+    dependencies {
+        implementation 'androidx.appcompat:appcompat:1.4.1'
+        implementation 'com.google.android.material:material:1.4.0'
+        implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+        testImplementation 'junit:junit:4.+'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
+        implementation fileTree(include: ['*.aar'], dir: 'libs')
+
+        implementation 'androidx.navigation:navigation-fragment:2.3.3'
+        implementation 'androidx.navigation:navigation-ui:2.3.3'
+        implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+        implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+
+        implementation 'com.android.support:multidex:1.0.3'
+        implementation 'android.arch.lifecycle:common-java8:1.1.0'
+
+        //Kotlin Coroutines
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
+
+    }
+}
+
+tasks.register("clean", Delete) {
+    delete(rootProject.buildDir)
+}
+
+
+task createArtifacts {
+    System.out.print("variant.buildType.name"+"mmmmmmmmmm")
+
+}
+
+
+
+
